@@ -38,3 +38,10 @@ plt.show()
 '''4. Missing Value Analysis:'''
 missing_values = data.isnull().sum()
 print("Missing Values:\n", missing_values[missing_values > 0])
+
+'''5. Outlier Detection:'''
+#box plot for outlier detection
+plt.figure(figsize = (10, 6))
+sns.boxplot(data=data[['age', 'avg_glucose_level', 'bmi']])
+plt.title('Box Plot for Outlier Detection')
+plt.show()
