@@ -5,10 +5,10 @@ data = pd.read_csv('F:\Data Science\Intro to Data Science\stroke-dataset-analysi
 print(data.head())
 print()
 
-'''1. SummaRy Statistics:'''
+''' 1. SummaRy Statistics: '''
 print('Summary Statistics:\n', data.describe())
 
-'''2. Visualizations:'''
+''' 2. Visualizations: '''
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -22,7 +22,7 @@ plt.xlabel('Stroke (0 = No, 1 = Yes)')
 plt.ylabel('Count')
 plt.show()
 
-'''3. Correlation Analysis:'''
+''' 3. Correlation Analysis: '''
 # Convert categorical variables to numeric (if needed)
 data_encoded = pd.get_dummies(data, columns=['gender'], drop_first=True)
 
@@ -35,18 +35,18 @@ sns.heatmap(correlation, annot=True, fmt=".2f", cmap='coolwarm')
 plt.title('Correlation Matrix')
 plt.show()
 
-'''4. Missing Value Analysis:'''
+''' 4. Missing Value Analysis: '''
 missing_values = data.isnull().sum()
-print("Missing Values:\n", missing_values[missing_values > 0])
+print("\nMissing Values:\n", missing_values[missing_values > 0])
 
-'''5. Outlier Detection:'''
+''' 5. Outlier Detection: '''
 #box plot for outlier detection
 plt.figure(figsize = (10, 6))
 sns.boxplot(data=data[['age', 'avg_glucose_level', 'bmi']])
 plt.title('Box Plot for Outlier Detection')
 plt.show()
 
-'''6. Feature Distribution Analysis:'''
+''' 6. Feature Distribution Analysis: '''
 # Histogram for feature distribution
 data['age'].hist(bins=30, color='blue', alpha=0.7)
 plt.title('Age Distribution')
@@ -54,7 +54,12 @@ plt.xlabel('Age')
 plt.ylabel('Frequency')
 plt.show()
 
-'''7. Data Types and Unique Value Counts:'''
+''' 7. Data Types and Unique Value Counts: '''
 # Data types and unique value counts
-print("Data Types:\n", data.dtypes)
-print("Unique Value Counts:\n", data.nunique())
+print("\nData Types:\n", data.dtypes)
+print("\nUnique Value Counts:\n", data.nunique())
+
+''' 9. Grouped Aggregations: '''
+# Grouped aggregations by gender
+grouped_data = data.groupby('gender')['stroke'].mean()
+print("\nGrouped Aggregation by Gender:\n", grouped_data)
