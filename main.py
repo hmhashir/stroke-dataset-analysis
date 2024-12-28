@@ -5,6 +5,10 @@ data = pd.read_csv('F:\Data Science\Intro to Data Science\stroke-dataset-analysi
 print(data.head())
 print()
 
+'''
+Exploratory Data Analysis (EDA)
+'''
+
 ''' 1. SummaRy Statistics: '''
 print('Summary Statistics:\n', data.describe())
 
