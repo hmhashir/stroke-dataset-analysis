@@ -63,3 +63,9 @@ print("\nUnique Value Counts:\n", data.nunique())
 # Grouped aggregations by gender
 grouped_data = data.groupby('gender')['stroke'].mean()
 print("\nGrouped Aggregation by Gender:\n", grouped_data)
+
+''' 10. Insights from Relationships Between Features: '''
+# Pairwise analysis
+sns.pairplot(data, hue='stroke')
+plt.title('Pairwise Analysis of Features')
+plt.show()
