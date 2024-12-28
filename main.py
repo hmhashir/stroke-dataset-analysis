@@ -85,5 +85,12 @@ Data Preprocessing
 data['bmi'].fillna(data['bmi'].mean(), inplace=True)
 
 ''' 2. Encode Categorical Variables: '''
+# Convert categorical variables to numerical
 data['gender'] = data['gender'].map[{'Male' : 1, 'Female' : 0}]
 data['ever_married'] = data['ever_married'].map[{'Yes' : 1, 'No' : 0}]
+
+''' 3. Scale or Normalize Numerical Features: '''
+from sklearn.preporcessing import StandardScaler
+scaler = StandardScaler()
+data[['age', 'avg_glucose_level', 'bmi']] = scalar.fit_transfromation
+
