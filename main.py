@@ -45,3 +45,11 @@ plt.figure(figsize = (10, 6))
 sns.boxplot(data=data[['age', 'avg_glucose_level', 'bmi']])
 plt.title('Box Plot for Outlier Detection')
 plt.show()
+
+'''6. Feature Distribution Analysis:'''
+# Histogram for feature distribution
+data['age'].hist(bins=30, color='blue', alpha=0.7)
+plt.title('Age Distribution')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.show()
