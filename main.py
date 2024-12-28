@@ -6,6 +6,7 @@ print(data.head())
 print()
 
 '''
+Part #1:
 Exploratory Data Analysis (EDA)
 '''
 
@@ -73,3 +74,16 @@ print("\nGrouped Aggregation by Gender:\n", grouped_data)
 sns.pairplot(data, hue='stroke')
 plt.title('Pairwise Analysis of Features')
 plt.show()
+
+'''
+Part #2
+Data Preprocessing
+'''
+
+''' 1. Handle Missing Values: '''
+# Fill missing values with the mean for numerical columns
+data['bmi'].fillna(data['bmi'].mean(), inplace=True)
+
+''' 2. Encode Categorical Variables: '''
+data['gender'] = data['gender'].map[{'Male' : 1, 'Female' : 0}]
+data['ever_married'] = data['ever_married'].map[{'Yes' : 1, 'No' : 0}]
