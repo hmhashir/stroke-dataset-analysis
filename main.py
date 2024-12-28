@@ -53,3 +53,8 @@ plt.title('Age Distribution')
 plt.xlabel('Age')
 plt.ylabel('Frequency')
 plt.show()
+
+'''7. Data Types and Unique Value Counts:'''
+# Data types and unique value counts
+print("Data Types:\n", data.dtypes)
+print("Unique Value Counts:\n", data.nunique())
