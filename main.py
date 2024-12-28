@@ -1,25 +1,23 @@
 import pandas as pd
 
-#Load the DataSet:
-data = pd.read_csv('F:\Data Science\Intro to Data Science\stroke-dataset-analysis\stroke-data.csv')
+# Load the DataSet:
+data = pd.read_csv('F:/Data Science/Intro to Data Science/stroke-dataset-analysis/stroke-data.csv')
 print(data.head())
 print()
 
 '''
-Part #1:
-Exploratory Data Analysis (EDA)
+PART #1:
+Exploratory Data Analysis (EDA):
 '''
 
-''' 1. SummaRy Statistics: '''
+''' 1. Summary Statistics: '''
 print('Summary Statistics:\n', data.describe())
 
 ''' 2. Visualizations: '''
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# sns.set(style = 'Whitegrid')
-
-#count plot for stroke:
+# Count plot for stroke:
 plt.figure(figsize=(8, 6))
 sns.countplot(x='stroke', data=data)
 plt.title('Count of Strokes')
@@ -45,8 +43,8 @@ missing_values = data.isnull().sum()
 print("\nMissing Values:\n", missing_values[missing_values > 0])
 
 ''' 5. Outlier Detection: '''
-#box plot for outlier detection
-plt.figure(figsize = (10, 6))
+# Box plot for outlier detection
+plt.figure(figsize=(10, 6))
 sns.boxplot(data=data[['age', 'avg_glucose_level', 'bmi']])
 plt.title('Box Plot for Outlier Detection')
 plt.show()
@@ -76,21 +74,47 @@ plt.title('Pairwise Analysis of Features')
 plt.show()
 
 '''
-Part #2
-Data Preprocessing
+PART #2:
+Data Preprocessing:
 '''
 
 ''' 1. Handle Missing Values: '''
 # Fill missing values with the mean for numerical columns
-data['bmi'].fillna(data['bmi'].mean(), inplace=True)
+data['bmi'] = data['bmi'].fillna(data['bmi'].mean())  # Assign back to the column
 
 ''' 2. Encode Categorical Variables: '''
 # Convert categorical variables to numerical
-data['gender'] = data['gender'].map[{'Male' : 1, 'Female' : 0}]
-data['ever_married'] = data['ever_married'].map[{'Yes' : 1, 'No' : 0}]
+data['gender'] = data['gender'].map({'Male': 1, 'Female': 0, 'Other': 0.5})  # Handle 'Other' category
+data['ever_married'] = data['ever_married'].map({'Yes': 1, 'No': 0})  # Use parentheses instead of brackets
 
 ''' 3. Scale or Normalize Numerical Features: '''
-from sklearn.preporcessing import StandardScaler
+from sklearn.preprocessing import StandardScaler  # Corrected the import statement
 scaler = StandardScaler()
-data[['age', 'avg_glucose_level', 'bmi']] = scalar.fit_transfromation
+data[['age', 'avg_glucose_level', 'bmi']] = scaler.fit_transform(data[['age', 'avg_glucose_level', 'bmi']])  # Corrected the method name
 
+''' 4. Split the Dataset: '''
+from sklearn.model_selection import train_test_split
+
+X = data.drop('stroke', axis=1)
+y = data['stroke']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+'''
+PART #3:
+Machine Learning Model:
+'''
+
+''' 1. Logistic Regression: '''
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report  # Corrected the import statement
+
+# Train Model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Make Prediction
+y_pred = model.predict(X_test)  # Changed to X_test for evaluation
+
+# Evaluate Model
+print('\nAccuracy: ', accuracy_score(y_test, y_pred))
+print('\nClassification Report:\n', classification_report(y_test, y_pred))
