@@ -27,7 +27,7 @@ plt.show()
 
 ''' 3. Correlation Analysis: '''
 # Convert categorical variables to numeric (if needed)
-data_encoded = pd.get_dummies(data, columns=['gender'], drop_first=True)
+data_encoded = pd.get_dummies(data, drop_first=True)  # Convert all categorical variables to numeric
 
 # Select only numeric columns for correlation
 data_numeric = data_encoded.select_dtypes(include=['number'])
@@ -83,20 +83,19 @@ Data Preprocessing:
 data['bmi'] = data['bmi'].fillna(data['bmi'].mean())  # Assign back to the column
 
 ''' 2. Encode Categorical Variables: '''
-# Convert categorical variables to numerical
-data['gender'] = data['gender'].map({'Male': 1, 'Female': 0, 'Other': 0.5})  # Handle 'Other' category
-data['ever_married'] = data['ever_married'].map({'Yes': 1, 'No': 0})  # Use parentheses instead of brackets
+# Convert categorical variables to numerical using one-hot encoding
+data_encoded = pd.get_dummies(data, drop_first=True)  # This will handle all categorical variables
 
 ''' 3. Scale or Normalize Numerical Features: '''
-from sklearn.preprocessing import StandardScaler  # Corrected the import statement
+from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
-data[['age', 'avg_glucose_level', 'bmi']] = scaler.fit_transform(data[['age', 'avg_glucose_level', 'bmi']])  # Corrected the method name
+data_encoded[['age', 'avg_glucose_level', 'bmi']] = scaler.fit_transform(data_encoded[['age', 'avg_glucose_level', 'bmi']])
 
 ''' 4. Split the Dataset: '''
 from sklearn.model_selection import train_test_split
 
-X = data.drop('stroke', axis=1)
-y = data['stroke']
+X = data_encoded.drop('stroke', axis=1)  # Ensure 'stroke' is dropped from features
+y = data_encoded['stroke']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 '''
@@ -106,14 +105,14 @@ Machine Learning Model:
 
 ''' 1. Logistic Regression: '''
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report  # Corrected the import statement
+from sklearn.metrics import accuracy_score, classification_report
 
 # Train Model
-model = LogisticRegression()
+model = LogisticRegression(max_iter=2000)
 model.fit(X_train, y_train)
 
 # Make Prediction
-y_pred = model.predict(X_test)  # Changed to X_test for evaluation
+y_pred = model.predict(X_test)
 
 # Evaluate Model
 print('\nAccuracy: ', accuracy_score(y_test, y_pred))
